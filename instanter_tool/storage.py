@@ -86,6 +86,23 @@ def save_scenario(
     return int(scenario_id)
 
 
+def update_scenario_name(engine: Engine, scenario_id: int, scenario_name: str) -> None:
+    ensure_schema(engine)
+    with engine.begin() as conn:
+        conn.execute(
+            text(
+                """
+                UPDATE investment_scenarios
+                SET
+                    scenario_name = :scenario_name,
+                    payload = jsonb_set(payload, '{scenario_name}', to_jsonb(CAST(:scenario_name AS text)), true)
+                WHERE id = :scenario_id
+                """
+            ),
+            {"scenario_id": scenario_id, "scenario_name": scenario_name},
+        )
+
+
 def list_scenarios(engine: Engine, limit: int = 25) -> list[dict[str, Any]]:
     ensure_schema(engine)
     with engine.begin() as conn:

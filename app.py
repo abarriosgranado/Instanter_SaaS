@@ -15,6 +15,7 @@ from instanter_tool.storage import (
     load_scenario_pdf,
     next_scenario_number,
     save_scenario,
+    update_scenario_name,
 )
 
 SCENARIO_COLORS = [
@@ -1076,14 +1077,30 @@ if db_scenarios:
         scenario_number = row.get("scenario_number")
         if scenario_number is None:
             scenario_number = row["id"]
-        label = scenario_display_name(int(scenario_number), str(row["scenario_name"]))
         created_at = row["created_at"].strftime("%Y-%m-%d %H:%M")
-        cols = st.columns([1.6, 1.1, 1])
+        cols = st.columns([1.8, 0.9, 0.7, 1])
         with cols[0]:
-            st.write(f"**{label}**")
+            edited_name = st.text_input(
+                "Scenario name",
+                value=scenario_display_name(int(scenario_number), str(row["scenario_name"])),
+                key=f"db_scenario_name_{row['id']}",
+                label_visibility="collapsed",
+            )
         with cols[1]:
             st.caption(created_at)
         with cols[2]:
+            if st.button("Save name", key=f"save_name_db_{row['id']}", width="stretch"):
+                clean_name = edited_name.strip()
+                if clean_name:
+                    try:
+                        update_scenario_name(db_engine, int(row["id"]), clean_name)
+                        st.success("Scenario name updated.")
+                        st.rerun()
+                    except Exception as exc:
+                        st.error(f"Could not update scenario name: {exc}")
+                else:
+                    st.warning("Add a scenario name before saving.")
+        with cols[3]:
             try:
                 pdf_bytes = load_scenario_pdf(db_engine, int(row["id"])) if db_engine and row.get("has_pdf") else None
             except Exception:
@@ -1102,14 +1119,26 @@ if db_scenarios:
 elif st.session_state["generated_scenarios"]:
     st.caption("Generated in this session. Configure Neon to keep the full history after restart.")
     for scenario in st.session_state["generated_scenarios"]:
-        cols = st.columns([1.6, 1.1, 1])
+        cols = st.columns([1.8, 0.9, 0.7, 1])
         with cols[0]:
-            st.write(
-                f"**{scenario_display_name(int(scenario['scenario_number']), str(scenario['scenario_name']))}**"
+            edited_name = st.text_input(
+                "Scenario name",
+                value=scenario_display_name(int(scenario["scenario_number"]), str(scenario["scenario_name"])),
+                key=f"local_scenario_name_{scenario['scenario_number']}",
+                label_visibility="collapsed",
             )
         with cols[1]:
             st.caption("Current session")
         with cols[2]:
+            if st.button("Save name", key=f"save_name_local_{scenario['scenario_number']}", width="stretch"):
+                clean_name = edited_name.strip()
+                if clean_name:
+                    scenario["scenario_name"] = clean_name
+                    st.success("Scenario name updated for this session.")
+                    st.rerun()
+                else:
+                    st.warning("Add a scenario name before saving.")
+        with cols[3]:
             st.download_button(
                 "Download PDF",
                 data=scenario["pdf_file"],
