@@ -357,11 +357,11 @@ def insight_cards(comparison: pd.DataFrame, recommendation: dict[str, str | floa
     roi_rows = comparison.dropna(subset=["roi"]).sort_values("roi", ascending=False)
 
     if roi_rows.empty:
-        roi_line = "Add project costs to calculate ROI and compare capital efficiency."
+        roi_line = "Add project costs to see how much profit each dollar invested would generate."
         roi_metric = "ROI pending"
     else:
         roi_leader = str(roi_rows.iloc[0]["project"]).split(":")[0]
-        roi_line = f"{roi_leader} shows the stronger ROI based on the current cost assumptions."
+        roi_line = f"{roi_leader} gives the best return for the money invested under the current assumptions."
         roi_metric = f"{roi_leader} leads"
 
     return [
@@ -369,24 +369,24 @@ def insight_cards(comparison: pd.DataFrame, recommendation: dict[str, str | floa
             "title": "Investment Recommendation",
             "metric": winner,
             "body": (
-                f"The model recommends {winner} because it delivers the highest net value "
-                f"across {len(comparison)} projects over the selected horizon."
+                f"Based on the current assumptions, {winner} is the strongest option. "
+                "It is expected to leave the most money after the project cost is paid."
             ),
         },
         {
             "title": "Financial Impact",
             "metric": signed_usd(net_delta),
             "body": (
-                f"Net value gap is shown versus {runner_up}. "
-                f"The pre-cost revenue gap versus the next best project is {signed_usd(revenue_delta)}."
+                f"Compared with {runner_up}, this is the estimated difference in value after project costs. "
+                f"Before project costs, the revenue difference is {signed_usd(revenue_delta)}."
             ),
         },
         {
-            "title": "ROI and Risk Drivers",
+            "title": "Main Drivers",
             "metric": roi_metric,
             "body": (
-                f"{roi_line} The key decision drivers are new customer acquisition, plan mix, "
-                "price changes, churn variation, and project cost."
+                f"{roi_line} The result mainly depends on customers added, customer mix, price changes, "
+                "retention improvement, and project cost."
             ),
         },
     ]
