@@ -113,7 +113,7 @@ h1, h2, h3 {
   position: relative;
   border: 1px solid #dbe5ec;
   border-radius: 14px;
-  padding: 2rem 2.2rem;
+  padding: 2rem 24rem 2rem 2.2rem;
   margin-bottom: 1.45rem;
   overflow: hidden;
   background:
@@ -121,14 +121,14 @@ h1, h2, h3 {
   box-shadow: 0 18px 45px rgba(16, 42, 67, 0.08);
 }
 .hero-title {
-  max-width: 900px;
+  max-width: 980px;
   font-size: 2.55rem;
   line-height: 1.08;
   font-weight: 820;
   color: var(--ink);
 }
 .hero-subtitle {
-  max-width: 820px;
+  max-width: 760px;
   color: var(--muted);
   font-size: 1.03rem;
   line-height: 1.5;
@@ -152,10 +152,13 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   gap: 0.65rem;
+  justify-content: flex-end;
+  width: 20rem;
   color: var(--accent-strong);
   font-weight: 800;
   letter-spacing: .06em;
   font-size: 1.35rem;
+  text-align: right;
 }
 .brand-mark svg {
   width: 4rem;
@@ -170,6 +173,9 @@ h1, h2, h3 {
   }
   .brand-mark {
     position: static;
+    width: auto;
+    justify-content: flex-start;
+    text-align: left;
     margin-bottom: 1rem;
   }
 }
