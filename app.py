@@ -31,7 +31,7 @@ SCENARIO_COLORS = [
 
 
 st.set_page_config(
-    page_title="INSTANTER SAAS | The Strategic Investment Decision Tool",
+    page_title="INSTANTER SAAS | The SaaS Strategic Investment Decision Tool",
     layout="wide",
 )
 
@@ -39,23 +39,64 @@ st.set_page_config(
 CUSTOM_CSS = """
 <style>
 :root {
-  --primary: #155e75;
-  --accent: #0f766e;
-  --ink: #17202a;
-  --muted: #5f6f7a;
+  --primary: #102a43;
+  --accent: #0f8b78;
+  --accent-strong: #0f766e;
+  --gold: #d99a22;
+  --ink: #111827;
+  --muted: #64748b;
+  --soft: #f6f8fb;
   --surface: #ffffff;
-  --line: #d8e1e7;
+  --line: #dde5ec;
+}
+.stApp {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f7fafc 44%, #f3f6f8 100%);
 }
 .main .block-container {
-  padding-top: 2rem;
+  padding-top: 2.4rem;
   padding-bottom: 3rem;
-  max-width: 1280px;
+  max-width: 1320px;
 }
 section[data-testid="stSidebar"] {
-  width: 420px !important;
+  width: 455px !important;
+  background: #edf1f5;
+  border-right: 1px solid #d7e0e7;
 }
 section[data-testid="stSidebar"] > div:first-child {
-  width: 420px !important;
+  width: 455px !important;
+  padding-top: 1.5rem;
+}
+section[data-testid="stSidebar"] details {
+  background: #ffffff;
+  border: 1px solid #d6dee6;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(16, 42, 67, 0.06);
+  overflow: hidden;
+}
+section[data-testid="stSidebar"] details summary {
+  font-weight: 760;
+  color: var(--ink);
+}
+section[data-testid="stSidebar"] hr {
+  border-color: #d8e0e7;
+  margin: 1.45rem 0;
+}
+div[data-testid="stNumberInput"] input,
+div[data-testid="stTextInput"] input {
+  border-radius: 9px;
+  border-color: #dce4ea;
+  background: #ffffff;
+}
+div[data-testid="stButton"] button,
+div[data-testid="stDownloadButton"] button {
+  border-radius: 9px;
+  min-height: 2.7rem;
+  font-weight: 760;
+}
+div[data-testid="stButton"] button[kind="primary"] {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
 }
 div[data-testid="stMetric"] {
   background: var(--surface);
@@ -70,71 +111,119 @@ h1, h2, h3 {
 }
 .hero {
   position: relative;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 1rem;
-  margin-bottom: 1.2rem;
-  padding-right: 8rem;
+  border: 1px solid #dbe5ec;
+  border-radius: 14px;
+  padding: 2rem 2.2rem;
+  margin-bottom: 1.45rem;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(15, 139, 120, 0.12) 0%, rgba(255, 255, 255, 0.94) 42%, rgba(246, 248, 251, 0.98) 100%);
+  box-shadow: 0 18px 45px rgba(16, 42, 67, 0.08);
 }
 .hero-title {
-  font-size: 2.2rem;
-  font-weight: 760;
+  max-width: 900px;
+  font-size: 2.55rem;
+  line-height: 1.08;
+  font-weight: 820;
   color: var(--ink);
 }
 .hero-subtitle {
   max-width: 820px;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 1.03rem;
   line-height: 1.5;
+  margin-top: 0.75rem;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 .brand-mark {
   position: absolute;
-  top: 0.1rem;
-  right: 0;
+  top: 1.6rem;
+  right: 2rem;
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  color: #0f766e;
+  color: var(--accent-strong);
   font-weight: 800;
-  letter-spacing: .04em;
-  font-size: 1.55rem;
+  letter-spacing: .06em;
+  font-size: 1.35rem;
 }
 .brand-mark svg {
-  width: 4.4rem;
-  height: 4.4rem;
+  width: 4rem;
+  height: 4rem;
 }
 @media (max-width: 700px) {
   .hero {
-    padding-right: 0;
-    padding-top: 3rem;
+    padding: 1.4rem;
+  }
+  .hero-title {
+    font-size: 2rem;
   }
   .brand-mark {
-    left: 0;
-    right: auto;
+    position: static;
+    margin-bottom: 1rem;
   }
+}
+.metric-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.15rem 1.2rem;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.07);
+  min-height: 118px;
+}
+.metric-label {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 760;
+  margin-bottom: 0.7rem;
+}
+.metric-value {
+  color: var(--ink);
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 820;
+}
+.section-title {
+  margin: 1.65rem 0 0.85rem;
+  color: var(--ink);
+  font-size: 1.75rem;
+  line-height: 1.15;
+  font-weight: 820;
 }
 .recommendation {
   background: #eef8f7;
-  border: 1px solid #a8d8d2;
-  border-radius: 8px;
-  padding: 1.1rem;
-  min-height: 220px;
+  border: 1px solid #b9e4de;
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  min-height: 245px;
+  box-shadow: 0 14px 34px rgba(15, 118, 110, 0.10);
 }
 .recommendation strong {
   color: #0f5f59;
+}
+.insight-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  min-height: 245px;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
 }
 .insight-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   margin: 1.25rem 0 1.5rem;
-}
-.insight-card {
-  min-height: 220px;
-  background: #ffffff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 1.1rem;
-  box-shadow: 0 2px 8px rgba(20, 40, 55, 0.07);
 }
 .insight-kicker {
   color: #0f766e;
@@ -146,15 +235,15 @@ h1, h2, h3 {
 }
 .insight-title {
   color: var(--ink);
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-size: 1.05rem;
+  font-weight: 820;
   line-height: 1.2;
-  margin-bottom: .75rem;
+  margin-bottom: .85rem;
 }
 .insight-metric {
-  color: #0f766e;
-  font-size: 1.75rem;
-  font-weight: 820;
+  color: var(--accent-strong);
+  font-size: 2.05rem;
+  font-weight: 850;
   line-height: 1.1;
   margin-bottom: .8rem;
 }
@@ -188,6 +277,15 @@ section[data-testid="stSidebar"] details > summary p {
   font-weight: 800;
   color: var(--ink);
 }
+div[data-testid="stDataFrame"] {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(16, 42, 67, 0.05);
+}
+button[data-baseweb="tab"] {
+  font-weight: 760;
+}
 </style>
 """
 
@@ -213,6 +311,26 @@ def payback_label(month: int | None) -> str:
 def signed_usd(value: float) -> str:
     sign = "+" if value >= 0 else "-"
     return f"{sign}${abs(value):,.0f}"
+
+
+def metric_card(label: str, value: str) -> str:
+    return f"""
+<div class="metric-card">
+  <div class="metric-label">{escape(label)}</div>
+  <div class="metric-value">{escape(value)}</div>
+</div>
+"""
+
+
+def insight_card(card: dict[str, str], highlighted: bool = False) -> str:
+    card_class = "recommendation" if highlighted else "insight-card"
+    return f"""
+<div class="{card_class}">
+  <div class="insight-title">{escape(card["title"])}</div>
+  <div class="insight-metric">{escape(card["metric"])}</div>
+  <div class="insight-body">{escape(card["body"])}</div>
+</div>
+"""
 
 
 def scenario_file_name(scenario_name: str) -> str:
@@ -720,7 +838,8 @@ st.markdown(
     </svg>
     <span>INSTANTER SAAS</span>
   </div>
-  <div class="hero-title">INSTANTER SAAS<br>The Strategic Investment Decision Tool</div>
+  <div class="hero-eyebrow">SaaS investment simulator</div>
+  <div class="hero-title">The SaaS Strategic Investment Decision Tool</div>
   <div class="hero-subtitle">
     A flexible decision simulator for comparing SaaS investment projects over time.
   </div>
@@ -826,30 +945,17 @@ metric_columns = st.columns(len(top_metrics))
 for column, (_, row) in zip(metric_columns, top_metrics.iterrows()):
     project_short = str(row["project"]).split(":")[0]
     with column:
-        st.metric(f"{project_short} net value", usd(float(row["net_value"])))
+        st.markdown(metric_card(f"{project_short} net value", usd(float(row["net_value"]))), unsafe_allow_html=True)
 
-st.subheader("Summary Findings & Insights")
+st.markdown('<div class="section-title">Summary Findings & Insights</div>', unsafe_allow_html=True)
 insight_columns = st.columns(3)
 with insight_columns[0]:
-    card = insights[0]
-    st.markdown(
-        f"""
-<div class="recommendation">
-  <div class="insight-title">{escape(card["title"])}</div>
-  <div class="insight-metric">{escape(card["metric"])}</div>
-  <div class="insight-body">{escape(card["body"])}</div>
-</div>
-""",
-        unsafe_allow_html=True,
-    )
+    st.markdown(insight_card(insights[0], highlighted=True), unsafe_allow_html=True)
 for column, card in zip(insight_columns[1:], insights[1:]):
     with column:
-        with st.container(border=True):
-            st.markdown(f"### {card['title']}")
-            st.markdown(f"## {card['metric']}")
-            st.write(card["body"])
+        st.markdown(insight_card(card), unsafe_allow_html=True)
 
-st.subheader("Comparative KPIs")
+st.markdown('<div class="section-title">Comparative KPIs</div>', unsafe_allow_html=True)
 kpi_table = comparison.copy()
 kpi_table["incremental_revenue"] = kpi_table["incremental_revenue"].map(usd)
 kpi_table["cost"] = kpi_table["cost"].map(usd)

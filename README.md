@@ -1,4 +1,4 @@
-# INSTANTER SAAS | The Strategic Investment Decision Tool
+# INSTANTER SAAS | The SaaS Strategic Investment Decision Tool
 
 A fictional portfolio Streamlit app that compares multiple strategic investment options.
 Every project is evaluated as its own January-acquired customer cohort — there is no

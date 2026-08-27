@@ -56,7 +56,7 @@ def build_analysis_report_pdf(
     story: list[Any] = []
 
     story.append(Paragraph("INSTANTER SAAS", styles["brand"]))
-    story.append(Paragraph("The Strategic Investment Decision Tool", styles["title"]))
+    story.append(Paragraph("The SaaS Strategic Investment Decision Tool", styles["title"]))
     story.append(Paragraph(scenario_name, styles["scenario"]))
     story.append(Paragraph(subtitle, styles["body"]))
     story.append(Spacer(1, 0.22 * inch))
