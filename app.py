@@ -351,7 +351,7 @@ def scenario_display_name(scenario_number: int | None, scenario_name: str) -> st
     default_name = f"Scenario {scenario_number}"
     if scenario_name.strip() == default_name:
         return default_name
-    return f"{default_name}: {scenario_name}"
+    return scenario_name
 
 
 def insight_cards(comparison: pd.DataFrame, recommendation: dict[str, str | float]) -> list[dict[str, str]]:
@@ -783,6 +783,12 @@ with st.sidebar:
             )
             for project_name in project_names
         }
+        st.text_input(
+            "Analysis name",
+            value="",
+            placeholder="Example: Base case, aggressive growth, retention upside",
+            key="analysis_name",
+        )
         if st.button("Run Analysis", type="primary", width="stretch"):
             st.session_state["run_analysis_requested"] = True
 
@@ -926,7 +932,8 @@ if st.session_state.pop("run_analysis_requested", False):
     except Exception:
         engine = None
         scenario_number = len(st.session_state["generated_scenarios"]) + 1
-    scenario_name = f"Scenario {scenario_number}"
+    entered_name = str(st.session_state.get("analysis_name", "")).strip()
+    scenario_name = entered_name or f"Scenario {scenario_number}"
     payload = current_scenario_payload()
     payload["scenario_number"] = scenario_number
     payload["scenario_name"] = scenario_name

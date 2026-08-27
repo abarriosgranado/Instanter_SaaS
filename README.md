@@ -47,7 +47,7 @@ url = "postgresql://USER:PASSWORD@HOST/neondb?sslmode=require&channel_binding=re
 
 4. Restart Streamlit on port `8502`.
 5. Open the `Database / Neon` section in the left panel.
-6. Click `Run Analysis` to generate numbered scenarios and PDF reports.
+6. Add an optional analysis name, then click `Run Analysis` to generate the scenario and PDF report.
 
 The app creates this table automatically when the first connection succeeds:
 
