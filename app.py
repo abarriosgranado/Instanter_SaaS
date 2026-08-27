@@ -359,10 +359,20 @@ def insight_cards(comparison: pd.DataFrame, recommendation: dict[str, str | floa
     if roi_rows.empty:
         roi_line = "Add project costs to see how much profit each dollar invested would generate."
         roi_metric = "ROI pending"
+        roi_title = "Payback & Return"
     else:
-        roi_leader = str(roi_rows.iloc[0]["project"]).split(":")[0]
-        roi_line = f"{roi_leader} gives the best return for the money invested under the current assumptions."
-        roi_metric = f"{roi_leader} leads"
+        roi_leader_row = roi_rows.iloc[0]
+        roi_leader = str(roi_leader_row["project"]).split(":")[0]
+        roi_value = float(roi_leader_row["roi"])
+        payback = None if pd.isna(roi_leader_row["payback_month"]) else int(roi_leader_row["payback_month"])
+        roi_line = (
+            f"This means {roi_leader} is expected to generate profit equal to {pct(roi_value)} "
+            f"of what it costs. For every $1 invested, it is expected to create about "
+            f"${roi_value:.2f} in extra profit. The initial investment is estimated to be "
+            f"recovered in about {payback_label(payback)}."
+        )
+        roi_metric = f"{pct(roi_value)} ROI"
+        roi_title = "Payback & Return"
 
     return [
         {
@@ -382,11 +392,10 @@ def insight_cards(comparison: pd.DataFrame, recommendation: dict[str, str | floa
             ),
         },
         {
-            "title": "Main Drivers",
+            "title": roi_title,
             "metric": roi_metric,
             "body": (
-                f"{roi_line} The result mainly depends on customers added, customer mix, price changes, "
-                "retention improvement, and project cost."
+                roi_line
             ),
         },
     ]
